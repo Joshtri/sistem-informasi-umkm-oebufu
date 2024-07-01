@@ -1,0 +1,59 @@
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title text-center">Statistik UMKM</h5>
+        <div style="width: 50%; margin: 0 auto;">
+            <canvas id="umkmChart"></canvas>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', async () => {
+        try {
+            const mikroResponse = await axios.get('/umkm-mikro');
+            const kecilResponse = await axios.get('/umkm-kecil');
+            const menengahResponse = await axios.get('/umkm-menengah');
+            
+            const umkmData = {
+                mikro: mikroResponse.data.totalMikro,
+                kecil: kecilResponse.data.totalKecil,
+                menengah: menengahResponse.data.totalMenengah
+            };
+
+            const umkmCtx = document.getElementById('umkmChart').getContext('2d');
+            new Chart(umkmCtx, {
+                type: 'pie',
+                data: {
+                    labels: ['Mikro', 'Kecil', 'Menengah'],
+                    datasets: [{
+                        label: 'UMKM Classification',
+                        data: [umkmData.mikro, umkmData.kecil, umkmData.menengah],
+                        backgroundColor: ['#ff6384', '#36a2eb', '#ffce56'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function (tooltipItem) {
+                                    const label = tooltipItem.label || '';
+                                    const value = tooltipItem.raw || 0;
+                                    return `${label}: ${value}`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        } catch (error) {
+            console.error('Error fetching UMKM statistics:', error);
+        }
+    });
+</script>

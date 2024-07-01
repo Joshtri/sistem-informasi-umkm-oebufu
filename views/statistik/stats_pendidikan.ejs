@@ -1,0 +1,56 @@
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title text-center">Statistik Pendidikan</h5>
+        <canvas id="pendidikanChart"></canvas>
+    </div>
+</div>
+
+
+<script>
+    // Statistik Pendidikan
+    document.addEventListener('DOMContentLoaded', async () => {
+        try {
+            const pendidikanResponse = await axios.get('/pendidikan-statistics');
+            const pendidikanData = pendidikanResponse.data;
+
+            const pendidikanCtx = document.getElementById('pendidikanChart').getContext('2d');
+            new Chart(pendidikanCtx, {
+                type: 'bar',
+                data: {
+                    labels: [
+                        'Belum/Tidak Pernah Sekolah', 'Belum/Tidak Tamat SD/SDLB/MI/Paket A', 'SD/SDLB/MI/Paket A',
+                        'SMP/SMPLB/MTs/Paket B', 'SMA/SMLB/MA/SMK/MAK/paket C', 'DI/DII/DIII', 
+                        'DIV/S1', 'S2', 'S3'
+                    ],
+                    datasets: [{
+                        label: 'Jumlah',
+                        data: [
+                            pendidikanData['Belum/Tidak Pernah Sekolah'], pendidikanData['Belum/Tidak Tamat SD/SDLB/MI/Paket A'], pendidikanData['SD/SDLB/MI/Paket A'],
+                            pendidikanData['SMP/SMPLB/MTs/Paket B'], pendidikanData['SMA/SMLB/MA/SMK/MAK/paket C'], pendidikanData['DI/DII/DIII'], 
+                            pendidikanData['DIV/S1'], pendidikanData['S2'], pendidikanData['S3']
+                        ],
+                        backgroundColor: [
+                            '#36a2eb', '#ff6384', '#ff9f40', '#ffcd56', '#4bc0c0', '#9966ff', '#c9cbcf',
+                            '#e7e9ed', '#56d798', '#cd56ff'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false // Sembunyikan legenda
+                        }
+                    }
+                }
+            });
+        } catch (error) {
+            console.error('Error fetching pendidikan statistics:', error);
+        }
+    });
+</script>

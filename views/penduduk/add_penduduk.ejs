@@ -1,0 +1,71 @@
+<div class="modal fade" id="addPendudukModal" tabindex="-1" aria-labelledby="addPendudukModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addPendudukModal">Tambah Penduduk</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="/adm/data/penduduk" method="POST">
+                    
+                    <div class="mb-3">
+                        <label for="nama_kepala_keluarga" class="form-label">Nama Penduduk</label>
+                        <input type="text" class="form-control" name="nama_penduduk">                
+                    </div>
+
+
+                    <div class="mb-3">
+                        <label for="pendidikan" class="form-label">Pendidikan</label>
+                        <select class="form-select" id="pendidikan" name="pendidikan_penduduk" required>
+                            <option value="">-</option>
+                            <option value="Belum/Tidak Pernah Sekolah">Belum/Tidak Pernah Sekolah</option>
+                            <option value="Belum/Tidak Tamat SD/SDLB/MI/Paket A">Belum/Tidak Tamat SD/SDLB/MI/Paket A</option>
+                            <option value="SD/SDLB/MI/Paket A">SD/SDLB/MI/Paket A</option>
+                            <option value="SMP/SMPLB/MTs/Paket B">SMP/SMPLB/MTs/Paket B</option>
+                            <option value="SMA/SMLB/MA/SMK/MAK/paket C">SMA/SMLB/MA/SMK/MAK/paket C</option>
+                            <option value="DI/DII/DIII">DI/DII/DIII</option>
+                            <option value="DIV/S1">DIV/S1</option>
+                            <option value="S2">S2</option>
+                            <option value="S3">S3</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="jenis_kelamin" class="form-label">Jenis Kelamin Penduduk</label>
+                        <select class="form-select" id="jenis_kelamin" name="jenis_kelamin" required>
+                            <option value="">-</option>
+                            <option value="laki-laki">Laki-laki</option>
+                            <option value="perempuan">Perempuan</option>
+                        </select>
+                    </div>
+
+                    
+
+                    <div class="mb-3">
+                        <label for="alamat_kepala_keluarga" class="form-label">Keluarga Dari</label>
+                        <!-- <input type="text" class="form-control" name="alamat_kepala_keluarga">      -->
+
+                        <select name="keluargaId" class="form-select" id="" required>
+                            <option value="">-</option>
+                            <% for(let i = 0; i < keluargaData.length; i++) { %>
+                              <option value="<%= keluargaData[i]._id %>">
+                                <%= keluargaData[i].nama_kepala_keluarga %> - <%= keluargaData[i]._id %>
+                              </option>
+                            <% } %>
+                        </select>
+                       
+                        <!-- <input type="text" class="form-control" name="keterangan"> -->
+                    </div>
+
+                    
+                    <!-- Add more fields as needed -->
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                <button type="submit" class="btn btn-primary">Simpan</button>
+            </div>
+                </form>
+        </div>
+    </div>
+</div>

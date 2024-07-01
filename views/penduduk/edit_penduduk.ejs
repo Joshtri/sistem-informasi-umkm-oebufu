@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('partials/head'); %>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<body>
+    <%- include('partials/header'); %>
+
+    <div class="container mt-4">
+        <nav aria-label="breadcrumb" class="small">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/main/dashboard"><i class="fa-solid fa-house me-1"></i>Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="/adm/data/kbli">Data Penduduk</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><%= title %></li>
+            </ol>
+        </nav>
+        <hr>
+        
+        <div class="d-flex justify-content-between">
+            <div>
+                <a class="btn btn-sm btn-warning" href="/adm/data/penduduk">Kembali</a>
+            </div>
+        </div>
+    
+        <div class="card border border-0 shadow-sm mt-4">
+            <div class="card-body">
+                <form action="/adm/data/penduduk/<%= pendudukEdit._id %>?_method=PUT" method="POST">
+                    <div class="row ">
+                        <!-- Tambahkan method spoofing untuk PUT -->
+                        <input type="hidden" name="_method" value="PUT">
+
+                        <div class="col-lg-4 mb-3">
+                            <label for="nama_penduduk" class="form-label">Nama Penduduk</label>
+                            <input type="text" class="form-control" name="nama_penduduk" value="<%= pendudukEdit.nama_penduduk %>" required>           
+                        </div>
+
+
+                        <div class="col-lg-4 mb-3">
+                            <label for="jenis_kelamin" class="form-label">Jenis Kelamin</label>
+                            <select class="form-select" id="jenis_kelamin" name="jenis_kelamin" required>
+                                <option value="">-</option>
+                                <option value="laki-laki" <%= pendudukEdit.jenis_kelamin === "laki-laki" ? 'selected' : '' %>>Laki-Laki</option>
+                                <option value="perempuan" <%= pendudukEdit.jenis_kelamin === "perempuan" ? 'selected' : '' %>>Perempuan</option>
+
+                            </select>
+                        </div>
+
+
+                        <div class="col-lg-4 mb-3">
+
+                            <label for="keluargaId" class="form-label">Keluarga Dari</label>
+                            <select name="keluargaId" class="form-select" id="keluargaId" required>
+                                <option value="">-</option>
+                                <% keluargaData.forEach(function(keluarga) { %>
+                                    <option value="<%= keluarga.id %>" <%= pendudukEdit.keluargaId.id  === keluarga.id ? 'selected' : '' %>>
+                                        <%= keluarga.nama_kepala_keluarga %> - <%= keluarga._id %>
+                                    </option>
+                                <% }); %>
+                            </select>
+                        </div>
+
+                        <div class="col-lg-4 mb-3">
+                            <label for="pendidikan" class="form-label">Pendidikan</label>
+                            <select class="form-select" id="pendidikan" name="pendidikan_penduduk" required>
+                                <option value="">-</option>
+                                <option value="Belum/Tidak Pernah Sekolah" <%= pendudukEdit.pendidikan_penduduk === "Belum/Tidak Pernah Sekolah" ? 'selected' : '' %>>Belum/Tidak Pernah Sekolah</option>
+                                <option value="Belum/Tidak Tamat SD/SDLB/MI/Paket A" <%= pendudukEdit.pendidikan_penduduk === "Belum/Tidak Tamat SD/SDLB/MI/Paket A" ? 'selected' : '' %>>Belum/Tidak Tamat SD/SDLB/MI/Paket A</option>
+                                <option value="SD/SDLB/MI/Paket A" <%= pendudukEdit.pendidikan_penduduk === "SD/SDLB/MI/Paket A" ? 'selected' : '' %>>SD/SDLB/MI/Paket A</option>
+                                <option value="SMP/SMPLB/MTs/Paket B" <%= pendudukEdit.pendidikan_penduduk === "SMP/SMPLB/MTs/Paket B" ? 'selected' : '' %>>SMP/SMPLB/MTs/Paket B</option>
+                                <option value="SMA/SMLB/MA/SMK/MAK/paket C" <%= pendudukEdit.pendidikan_penduduk === "SMA/SMLB/MA/SMK/MAK/paket C" ? 'selected' : '' %>>SMA/SMLB/MA/SMK/MAK/paket C</option>
+                                <option value="DI/DII/DIII" <%= pendudukEdit.pendidikan_penduduk === "DI/DII/DIII" ? 'selected' : '' %>>DI/DII/DIII</option>
+                                <option value="DIV/S1" <%= pendudukEdit.pendidikan_penduduk === "DIV/S1" ? 'selected' : '' %>>DIV/S1</option>
+                                <option value="S2" <%= pendudukEdit.pendidikan_penduduk === "S2" ? 'selected' : '' %>>S2</option>
+                                <option value="S3" <%= pendudukEdit.pendidikan_penduduk === "S3" ? 'selected' : '' %>>S3</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-3 text-center">
+                        <button type="submit" class="btn btn-sm btn-primary">Update Data</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <script src="/js/tooltip.js"></script>
+</body>
+</html> 

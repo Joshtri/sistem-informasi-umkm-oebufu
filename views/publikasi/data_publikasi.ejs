@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%-include('partials/head');%>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<body>
+    <%-include('partials/header');%>
+      <style>
+        .custom-table td,
+        .custom-table th {
+            font-size: 14px; /* Adjust the font size as needed */
+        }
+
+        #current-time {
+          font-size: 0.875rem; /* Sesuaikan ukuran font sesuai kebutuhan */
+          color: #000; /* Sesuaikan warna teks sesuai kebutuhan */
+        }
+      </style>
+
+      <style>
+        .custom-dropdown:hover .dropdown-menu {
+            display: block;
+            min-width: 100px; /* Sesuaikan dengan lebar yang diinginkan */
+        }
+        .dropdown-item {
+            font-size: 14px; /* Sesuaikan dengan ukuran font yang diinginkan */
+        }
+      </style>
+
+    <div class="container mt-4">
+        <nav aria-label="breadcrumb" class="small d-flex justify-content-between">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/main/dashboard"><i class="fa-solid fa-house me-1"></i>Dashboard</a></li>
+                <!-- <li class="breadcrumb-item"><a href="#">Data</a></li> -->
+                <li class="breadcrumb-item active" aria-current="page"><%= title %></li>
+            </ol>
+            <div id="current-time" class="align-self-center"></div>
+        </nav>
+        <hr>
+
+                        <!-- toast tambah data berhasil. -->
+        <% messageCreateSuccess.forEach(element => { %>
+        <div class="toast-container top-0 end-0 p-3">
+          <!-- Then put toasts within -->
+          <div class="toast show fade" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+              <div class="custom-avatar rounded me-2"></div>
+              <strong class="me-auto">Notifikasi</strong>
+              <small class="text-body-secondary">just now</small>
+              <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+              <%= element %>
+            </div>
+          </div>
+        </div>
+        <% }) %>
+
+        <% messageDeleteSuccess.forEach(element => { %>
+        <!-- toast edit data berhasil. -->
+        <div class="toast-container top-0 end-0 p-3">
+          <!-- Then put toasts within -->
+          <div class="toast show fade" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+              <div class="custom-avatar rounded me-2"></div>
+              <strong class="me-auto">Notifikasi</strong>
+              <small class="text-body-secondary">just now</small>
+              <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+              <%= element %>
+            </div>
+          </div>
+        </div>
+        <% }) %>
+
+        <% messageUpdateSuccess.forEach(element => { %>
+        <!-- toast edit data berhasil. -->
+        <div class="toast-container top-0 end-0 p-3">
+          <!-- Then put toasts within -->
+          <div class="toast show fade" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+              <div class="custom-avatar rounded me-2"></div>
+              <strong class="me-auto">Notifikasi</strong>
+              <small class="text-body-secondary">just now</small>
+              <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+              <%= element %>
+            </div>
+          </div>
+        </div>
+        <% }) %>
+
+
+
+        <div class="d-flex justify-content-between">
+            <div>
+                <a class="btn btn-sm btn-warning" href="/adm/data/add_publikasi">Tambah Data</a>
+            </div>
+        </div>
+
+
+
+    </div>
+
+
+    <div class="container mt-5">
+        <table class="table custom-table" id="data-table-view">
+            <thead>
+              <tr>
+                <th scope="col">No</th>
+                <th scope="col">Judul Publikasi</th>
+                <th scope="col">Tanggal Publikasi</th>
+                <th scope="col">Deskripsi Publikasi</th>
+                <th scope="col" class="text-center">Aksi 1</th>
+                <th scope="col" class="text-center"></th>
+                <th scope="col" class="text-center"></th>
+
+              </tr>
+            </thead>
+            <tbody>
+
+            <% for(let i=0; i < publikasiData.length ;i++) { %>
+              <tr>
+                <th scope="row"><%= i + 1%></th>
+                <td><%= publikasiData[i].judul_publikasi %></td>
+                <td><%= new Date(publikasiData[i].tanggal_publikasi).toLocaleString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }) %></td>
+                <td><%= publikasiData[i].deskripsi_publikasi %></td>
+
+
+                <td class="text-center">
+                  <a href="/adm/data/publikasi/<%= publikasiData[i]._id %>" class="btn btn-light btn-sm"><i class="fa-regular fa-eye"></i></a>
+                  <a class="btn btn-success btn-sm" href="/adm/data/edit_publikasi/<%= publikasiData[i]._id %>"><i class="fa-regular fa-pen-to-square"></i></a>
+                  <a class="btn btn-danger btn-sm delete-btn" data-bs-toggle="tooltip" data-bs-title="Delete this data" data-id="<%= publikasiData[i]._id %>">
+                    <i class="fa-solid fa-trash-can"></i>
+                  </a>
+                </td>
+
+                <td class="text-end">
+                  <!-- untuk download only -->
+                  <span class="custom-dropdown">
+                      <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="dropdownMenuDownload" aria-expanded="false">
+                          Download
+                      </button>
+                      <ul class="dropdown-menu ms-1" aria-labelledby="dropdownMenuDownload">
+
+                          <li><a class="dropdown-item" href="/<%= publikasiData[i].berkas_publikasi_pdf %>" download>file .pdf</a></li>
+                          <li><a class="dropdown-item" href="/<%= publikasiData[i].berkas_publikasi_doc %>" download>file .docx</a></li>
+                          <li><a class="dropdown-item" href="/<%= publikasiData[i].berkas_publikasi_excel %>" download>file .xlsx</a></li>
+                      <!-- Tambahkan item dropdown lainnya sesuai kebutuhan -->
+                      </ul>
+                  </span>
+                </td>
+
+                <td class="">
+                  
+                  <span class="custom-dropdown">
+                      <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuRead" aria-expanded="false">
+                          Read
+                      </button>
+                      <ul class="dropdown-menu ms-1" aria-labelledby="dropdownMenuButton">
+
+                        <li><a class="dropdown-item" href="/<%= publikasiData[i].berkas_publikasi_pdf %>" target="_blank">file .pdf</a></li>
+                        <li><a class="dropdown-item" href="/<%= publikasiData[i].berkas_publikasi_doc %>" target="_blank">file .docx</a></li>
+                        <li><a class="dropdown-item" href="/<%= publikasiData[i].berkas_publikasi_excel %>" target="_blank">file .xlsx</a></li>
+                    <!-- Tambahkan item dropdown lainnya sesuai kebutuhan -->
+                      </ul>
+                  </span>
+                </td>
+                
+
+              </tr>
+              <% } %>
+
+            </tbody>
+        </table>
+    </div>
+
+    <%-include('publikasi/delete_publikasi'); %>
+        <!-- srcipt untuk delete data kbli -->
+
+
+
+            <!-- srcipt untuk delete data publikasi -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+          var deleteButtons = document.querySelectorAll('.delete-btn');
+          var deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+          var deleteForm = document.getElementById('deleteForm');
+          var deleteIdInput = document.getElementById('deleteId');
+
+          deleteButtons.forEach(function(button) {
+              button.addEventListener('click', function() {
+                  var id = this.getAttribute('data-id');
+                  deleteForm.setAttribute('action', '/adm/data/publikasi/' + id + '?_method=DELETE');
+                  deleteIdInput.value = id;
+                  deleteModal.show();
+              });
+          });
+
+          
+      });
+    </script>
+
+    
+
+    <script src="/js/tooltip.js"></script>
+    <!-- <script src="/js/features.js"></script> -->
+</body>
+</html> 

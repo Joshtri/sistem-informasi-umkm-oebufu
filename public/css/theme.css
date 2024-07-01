@@ -1,0 +1,46 @@
+.bg-bluedongker{
+    background-color: #061952;
+}
+
+.bg-cream{
+    background-color: #ede08a;
+}
+
+
+.btn-maroon {
+    color: #fff;
+    background-color: #A62349;
+    border-color: #A62349;
+}
+
+.btn-maroon:hover {
+    color: #fff;
+    background-color: #9b2244;
+    border-color: #9b2244;
+}
+
+.btn-check:focus + .btn-maroon, .btn-maroon:focus {
+    color: #fff;
+    background-color: #A62349;
+    border-color: #A62349;
+    box-shadow: 0 0 0 0.25rem rgba(170, 64, 32, 0.5);
+}
+
+.btn-check:checked + .btn-maroon, .btn-check:active + .btn-maroon, .btn-maroon:active, .btn-maroon.active, .show > .btn-maroon.dropdown-toggle {
+    color: #fff;
+    background-color: #A62349;
+    border-color: #A62349;
+}
+
+.btn-check:checked + .btn-maroon:focus, .btn-check:active + .btn-maroon:focus, .btn-maroon:active:focus, .btn-maroon.active:focus, .show > .btn-maroon.dropdown-toggle:focus {
+    box-shadow: 0 0 0 0.25rem rgba(194, 78, 32, 0.5);
+}
+
+.btn-maroon:disabled, .btn-maroon.disabled {
+    color: #fff;
+    background-color: #A62349;
+    border-color: #9b2244;
+}
+
+
+

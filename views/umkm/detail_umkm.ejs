@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%-include('partials/head');%>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<body>
+    <%-include('partials/header');%>
+
+
+    <div class="container mt-4">
+        <nav aria-label="breadcrumb" class="small">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/main/dashboard"><i class="fa-solid fa-house me-1"></i>Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="/adm/data/umkm">Data UMKM</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><%= title %></li>
+            </ol>
+        </nav>
+        <hr>
+        
+        <div class="d-flex justify-content-between">
+            <div>
+                <a class="btn btn-sm btn-warning" href="/adm/data/umkm">Kembali</a>
+            </div>
+        </div>
+
+        <div class="card border border-0 shadow-sm mt-4">
+            <div class="card-body">
+                <form>
+                    <div class="row g-3">
+                        <div class="col-lg-6 mb-3">
+                            <label for="namaPemilik" class="form-label">Nama Pemilik</label>
+                            <input type="text" class="form-control" id="namaPemilik" value="<%= umkmDetail.nama_pemilik.nama_penduduk %>" readonly>
+                        </div>
+                        <div class="col-lg-6 mb-3">
+                            <label for="namaUsaha" class="form-label">Nama Usaha</label>
+                            <input type="text" class="form-control" id="namaUsaha" value="<%= umkmDetail.nama_usaha %>" readonly>
+                        </div>
+                        <div class="col-lg-6 mb-3">
+                            <label for="alamatTempatUsaha" class="form-label">Alamat Tempat Usaha</label>
+                            <input type="text" class="form-control" id="alamatTempatUsaha" value="<%= umkmDetail.alamat_tempat_usaha %>" readonly>
+                        </div>
+                        <div class="col-lg-6 mb-3">
+                            <label for="keluargaId" class="form-label">Nama Kepala Keluarga</label>
+                            <input type="text" class="form-control" id="keluargaId" value="<%= umkmDetail.keluarga_Id.nama_kepala_keluarga %>" readonly>
+                        </div>
+                        <div class="col-lg-6 mb-3">
+                            <label for="pembinaanUsaha" class="form-label">Pembinaan Usaha</label>
+                            <input type="text" class="form-control" id="pembinaanUsaha" value="<%= umkmDetail.pembinaan_usaha %>" readonly>
+                        </div>
+                        <div class="col-lg-6 mb-3">
+                            <label for="rincianKegiatanUsaha" class="form-label">Rincian Kegiatan Usaha</label>
+                            <input type="text" class="form-control" id="rincianKegiatanUsaha" value="<%= umkmDetail.rincian_kegiatan_usaha %>" readonly>
+                        </div>
+                        <div class="col-lg-6 mb-3">
+                            <label for="alamatTempatTinggal" class="form-label">Alamat Tempat Tinggal</label>
+                            <input type="text" class="form-control" id="alamatTempatTinggal" value="<%= umkmDetail.alamat_tempat_tinggal %>" readonly>
+                        </div>
+                        <div class="col-lg-6 mb-3">
+                            <label for="pendidikanPemilik" class="form-label">Pendidikan Pemilik</label>
+                            <input type="text" class="form-control" id="pendidikanPemilik" value="<%= umkmDetail.pendidikan_pemilik %>" readonly>
+                        </div>
+                        <div class="col-lg-6 mb-3">
+                            <label for="jenisLokasiUsaha" class="form-label">Jenis Lokasi Usaha</label>
+                            <input type="text" class="form-control" id="jenisLokasiUsaha" value="<%= umkmDetail.jenis_lokasi_usaha %>" readonly>
+                        </div>
+                        <div class="col-lg-6 mb-3">
+                            <label for="jenisPengelolaanUsaha" class="form-label">Jenis Pengelolaan Usaha</label>
+                            <input type="text" class="form-control" id="jenisPengelolaanUsaha" value="<%= umkmDetail.jenis_pengelolaan_usaha %>" readonly>
+                        </div>
+                        <div class="col-lg-6 mb-3">
+                            <label for="omsetTahunanUsaha" class="form-label">Omset Tahunan Usaha</label>
+                            <input type="text" class="form-control" id="omsetTahunanUsaha" value="<%= umkmDetail.omset_tahunan_usaha %>" readonly>
+                        </div>
+                        <div class="col-lg-6 mb-3">
+                            <label for="kbliId" class="form-label">KBLI ID</label>
+                            <input type="text" class="form-control" id="kbliId" value="<%= umkmDetail.kbli_Id.keterangan %>" readonly>
+                        </div>
+                        <div class="col-lg-6 mb-3">
+                            <label for="kekayaanBersihUsaha" class="form-label">Kekayaan Bersih Usaha</label>
+                            <input type="text" class="form-control" id="kekayaanBersihUsaha" value="<%= umkmDetail.kekayaan_bersih_usaha %>" readonly>
+                        </div>
+                        <div class="col-lg-6 mb-3">
+                            <label for="jumlahTenagaKerja" class="form-label">Jumlah Tenaga Kerja</label>
+                            <input type="text" class="form-control" id="jumlahTenagaKerja" value="<%= umkmDetail.jumlah_tenaga_kerja %>" readonly>
+                        </div>
+                        <div class="col-lg-6 mb-3">
+                            <label for="sumberModalUsaha" class="form-label">Sumber Modal Usaha</label>
+                            <input type="text" class="form-control" id="sumberModalUsaha" value="<%= umkmDetail.sumber_modal_usaha %>" readonly>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <script src="/js/tooltip.js"></script>
+</body>
+</html> 

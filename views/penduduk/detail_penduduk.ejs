@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%-include('partials/head');%>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<body>
+    <%-include('partials/header');%>
+
+    <div class="container mt-4">
+        <nav aria-label="breadcrumb" class="small">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/main/dashboard"><i class="fa-solid fa-house me-1"></i>Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="/adm/data/kbli">Data Penduduk</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><%= title %></li>
+            </ol>
+        </nav>
+        <hr>
+        
+        <div class="d-flex justify-content-between">
+            <div>
+                <a class="btn btn-sm btn-warning" href="/adm/data/penduduk">Kembali</a>
+            </div>
+        </div>
+    
+        <div class="card border border-0 shadow-sm mt-4">
+            <div class="card-body">
+                <div class="row ">
+                    <div class="col-lg-4  mb-3">
+                        <label for="nama_kepala_keluarga" class="form-label">Nama Penduduk</label>
+                        <input type="text" class="form-control" name="nama_penduduk" value="<%= pendudukDetail.nama_penduduk %>" readonly>           
+                    </div>
+
+                    <div class="col-lg-4 mb-3">
+                        <label for="jenis_kelamin" class="form-label">Jenis Kelamin</label>
+                        <input type="text" class="form-control" name="jenis_kelamin" value="<%= pendudukDetail.jenis_kelamin %>" readonly>           
+                    </div>
+                    
+                    <div class="col-lg-4 mb-3">
+                        <label for="nama_kepala_keluarga" class="form-label">Keluarga Dari</label>
+                        <input type="text" class="form-control" name="nama_penduduk" value="<%= pendudukDetail.keluargaId.nama_kepala_keluarga %>" readonly>           
+                    </div>
+                    
+                    <div class="col-lg-4  mb-3">
+                        <label for="pendidikan" class="form-label">Pendidikan</label>
+                        <input type="text" class="form-control" name="nama_penduduk" value="<%= pendudukDetail.pendidikan_penduduk %>" readonly>           
+
+                    </div>
+                </div>  
+            </div>
+        </div>
+    </div>
+    
+
+
+
+    <script src="/js/tooltip.js"></script>
+</body>
+</html> 

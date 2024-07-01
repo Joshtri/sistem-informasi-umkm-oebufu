@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+
+    <!-- start navbar header -->
+        <%- include('partials/header'); %>
+    <!-- end navbar header -->
+
+    <style>
+        .danger-zone {
+            border: 0px solid #dc3545;
+            padding: 15px;
+            border-radius: 2px;
+            margin-top: 30px;
+            box-shadow: 0 2px 4px rgba(220, 53, 69, 0.5);
+        }
+    </style>
+
+    <div class="container mt-4 mb-3">
+        <nav aria-label="breadcrumb" class="small">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/main/dashboard"><i class="fa-solid fa-house me-1"></i>Dashboard</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><%= title %> (<%= user.nama_lengkap %>)</li>
+            </ol>
+        </nav>
+        <hr>
+
+        <a href="/main/dashboard" class="btn btn-sm btn-warning">Kembali</a>
+
+        <h3 class="mt-2">Informasi Akun Anda</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Nama Lengkap</th>
+                    <th scope="col">Username</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td id="nama_lengkap" contenteditable="true" oninput="showSaveButton()" class="text-capitalize"><%= user.nama_lengkap %></td>
+                    <td id="username" contenteditable="true" oninput="showSaveButton()"><%= user.username %></td>
+                    <!-- <td>
+                        <i onclick="editUser('<%= user._id %>')" class="fa-solid fa-pen-to-square" style="color: #74C0FC;"></i>
+                    </td> -->
+                    <td>
+                        <i onclick="saveUpdate('<%= user._id %>')" id="save_update" class="fa-solid fa-floppy-disk fa-fade" style="color: #74C0FC; display:none;"></i>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <hr>
+        
+
+        <!-- Danger Zone: Ubah Password -->
+        <div class="danger-zone">
+            <h5 class="text-danger">Danger Zone</h5>
+            <p class="text-danger">Ubah kata sandi akun Anda di sini. Pastikan kata sandi baru berbeda dari kata sandi sebelumnya.</p>
+            <button class="btn btn-outline-danger mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#dangerZoneContent" aria-expanded="false" aria-controls="dangerZoneContent">
+                Ubah Kata Sandi
+            </button>
+            <div class="collapse" id="dangerZoneContent">
+                <form id="change-password-form" onsubmit="return validatePasswordChangeForm(event)">
+                    <input type="hidden" id="user-id" name="userId" value="<%= user._id %>">
+                    <div class="mb-3">
+                        <label for="new-password" class="form-label">Kata Sandi Baru</label>
+                        <input type="password" class="form-control" id="new-password" name="new-password" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="confirm-new-password" class="form-label">Konfirmasi Kata Sandi Baru</label>
+                        <input type="password" class="form-control" id="confirm-new-password" name="confirm-new-password" required>
+                    </div>
+                    <button type="submit" class="btn btn-danger">Ubah Kata Sandi</button>
+                </form>
+            </div>
+            <hr>
+            <div>
+                <button onclick="deleteUser('<%= user._id %>')" class="btn btn-danger btn-sm">Hapus Akun Anda</button>
+            </div>
+        </div>
+
+
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="successModalLabel">Password Changed Successfully</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Your password has been changed successfully. You will be logged out in <span id="countdown">5</span> seconds.
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="successModalDetail" tabindex="-1" aria-labelledby="successModalDetailLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="successModalDetailLabel">User Details Updated Successfully</h5>
+                </div>
+                <div class="modal-body">
+                    Your user details have been updated successfully. You will be logged out in <span id="countdownDetail">5</span> seconds.
+                </div>
+                <!-- <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div> -->
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        function showSaveButton() {
+            document.getElementById('save_update').style.display = 'inline-block';
+        }
+    
+        function saveUpdate(userId) {
+            const namaLengkap = document.getElementById('nama_lengkap').textContent.trim();
+            const username = document.getElementById('username').textContent.trim();
+    
+            const data = {
+                userId: userId,
+                namaLengkap: namaLengkap,
+                username: username
+            };
+    
+            fetch('/update_user', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.error) {
+                    alert(result.error);
+                } else {
+                    showModalAndLogoutDetail();
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    
+        function showModalAndLogoutDetail() {
+            const modal = new bootstrap.Modal(document.getElementById('successModalDetail'));
+            modal.show();
+    
+            let countdown = 5;
+            const countdownElement = document.getElementById('countdownDetail');
+            const countdownInterval = setInterval(() => {
+                countdown--;
+                countdownElement.textContent = countdown;
+                if (countdown === 0) {
+                    clearInterval(countdownInterval);
+                    window.location.href = '/logout';
+                }
+            }, 1000);
+        }
+        </script>
+
+    <script>
+
+        function validatePasswordChangeForm(event) {
+            event.preventDefault();
+
+            const userId = document.getElementById('user-id').value;
+            const newPassword = document.getElementById('new-password').value;
+            const confirmNewPassword = document.getElementById('confirm-new-password').value;
+
+            if (newPassword !== confirmNewPassword) {
+                alert('Passwords do not match');
+                return false;
+            }
+
+            const data = {
+                userId: userId,
+                newPassword: newPassword,
+                confirmNewPassword: confirmNewPassword
+            };
+
+            fetch('/update_password', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.error) {
+                    alert(result.error);
+                } else {
+                    showModalAndLogout();
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+
+            return false;
+        }
+
+        function showModalAndLogout() {
+            const modal = new bootstrap.Modal(document.getElementById('successModal'));
+            modal.show();
+
+            let countdown = 5;
+            const countdownElement = document.getElementById('countdown');
+            const countdownInterval = setInterval(() => {
+                countdown--;
+                countdownElement.textContent = countdown;
+                if (countdown === 0) {
+                    clearInterval(countdownInterval);
+                    window.location.href = '/logout';
+                }
+            }, 1000);
+        }
+    </script>
+
+
+    <script>
+function deleteUser(userId) {
+    if (confirm("Anda yakin ingin menghapus akun ini?")) {
+        fetch(`/adm/data/user/${userId}`, {
+            method: 'DELETE'
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Gagal menghapus akun');
+            }
+            return response.json();
+        })
+        .then(result => {
+            alert('Akun berhasil dihapus');
+            window.location.href = '/logout'; // Arahkan pengguna ke halaman logout setelah berhasil menghapus akun
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Gagal menghapus akun');
+        });
+    }
+}
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%-include('partials/head');%>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <%-include('partials/header');%>
+    <div class="container mt-5 mb-4">
+        <nav aria-label="breadcrumb" class="small">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/main/dashboard"><i class="fa-solid fa-house me-1"></i>Dashboard</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><%= title %></li>
+            </ol>
+        </nav>
+        <hr>
+        <h2 class="mb-4"><%= title %></h2>
+        <a href="/adm/data/kegiatan" class="btn btn-secondary btn-sm">Kembali</a>
+
+        <form class="row g-3"  method="POST" action="/adm/data/update_kegiatan/<%= kegiatanEdit._id %>?_method=PUT">
+            <!-- Tambahkan method spoofing untuk PUT -->
+            <input type="hidden" name="_method" value="PUT">
+
+            <div class="col-md-6">
+                <label for="nama_kegiatan" class="form-label">Nama Kegiatan</label>
+                <input type="text" class="form-control" id="nama_kegiatan" name="nama_kegiatan"  value="<%= kegiatanEdit.nama_kegiatan %>">
+            </div>
+            <div class="col-md-6">
+                <label for="update_tanggal_kegiatan" class="form-label">Tanggal Kegiatan</label>
+                <div class="input-group">
+                    <input type="hidden" class="form-control" name="tanggal_kegiatan_old" value="<%= kegiatanEdit.tanggal_kegiatan %>" readonly>
+                    <input type="text" class="form-control" id="update_tanggal_kegiatan_text" value="<%= new Date(kegiatanEdit.tanggal_kegiatan).toLocaleString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }) %>" readonly>
+                    <input type="date" class="form-control d-none" name="tanggal_kegiatan_new" id="update_tanggal_kegiatan_date">
+                    <button type="button" class="btn btn-secondary" id="ubah_tanggal_button">Ubah Tanggal</button>
+                    <button type="button" class="btn btn-secondary d-none" id="batal_ubah_tanggal_button">Batal Ubah</button>
+                </div>
+            </div>
+            <div class="col-12">
+                <label for="deskripsi_kegiatan" class="form-label">Deskripsi Kegiatan</label>
+                <textarea class="form-control" id="deskripsi_kegiatan" name="deskripsi_kegiatan" rows="3" required><%= kegiatanEdit.deskripsi_kegiatan %></textarea>
+            </div>
+            <div class="col-12">
+                <label for="foto_kegiatan" class="form-label">Foto Kegiatan</label>
+                <br>
+                <img src="data:image/png;base64,<%= kegiatanEdit.foto_kegiatan %>" alt="Foto Kegiatan" style="max-width: 200px;">
+                <!-- <div class="mt-3">
+                    <button type="button" class="btn btn-secondary mb-3" id="update_foto_button" onclick="toggleUpdateFoto()">Perbarui Gambar</button>
+                    <input class="form-control" type="file" id="update_foto_kegiatan" name="foto_kegiatan" accept="image/*" style="display: none;">
+                    <button type="button" class="btn btn-secondary mb-3 d-none" id="batal_update_foto_button" onclick="toggleUpdateFoto()">Batal Ubah</button>
+                </div> -->
+            </div>
+            
+            <hr>
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">Update Data</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function toggleUpdateFoto() {
+            const fileInput = document.getElementById('update_foto_kegiatan');
+            const perbaruiButton = document.getElementById('update_foto_button');
+            const batalButton = document.getElementById('batal_update_foto_button');
+    
+            if (fileInput.style.display === 'none') {
+                fileInput.style.display = 'block';
+                perbaruiButton.classList.add('d-none');
+                batalButton.classList.remove('d-none');
+            } else {
+                fileInput.style.display = 'none';
+                perbaruiButton.classList.remove('d-none');
+                batalButton.classList.add('d-none');
+            }
+        }
+
+        document.getElementById('ubah_tanggal_button').addEventListener('click', () => {
+            document.getElementById('update_tanggal_kegiatan_text').classList.add('d-none');
+            document.getElementById('update_tanggal_kegiatan_date').classList.remove('d-none');
+            document.getElementById('ubah_tanggal_button').classList.add('d-none');
+            document.getElementById('batal_ubah_tanggal_button').classList.remove('d-none');
+        });
+
+        document.getElementById('batal_ubah_tanggal_button').addEventListener('click', () => {
+            document.getElementById('update_tanggal_kegiatan_text').classList.remove('d-none');
+            document.getElementById('update_tanggal_kegiatan_date').classList.add('d-none');
+            document.getElementById('ubah_tanggal_button').classList.remove('d-none');
+            document.getElementById('batal_ubah_tanggal_button').classList.add('d-none');
+        });
+    </script>
+</body>
+</html>

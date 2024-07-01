@@ -1,0 +1,33 @@
+<div class="modal fade" id="addKbliModal" tabindex="-1" aria-labelledby="addKbliModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addKbliModal">Tambah KBLI</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="/adm/data/kbli" method="POST">
+                    
+                    <div class="mb-3">
+                        <label for="nomor_kbli" class="form-label">Nomor KBLI</label>
+                        <input type="number" class="form-control" name="nomor_kbli">                
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="keterangan" class="form-label">Keterangan KBLI</label>
+                        <textarea class="form-control" placeholder="Masukkan keterangan" id="floatingTextarea" name="keterangan"></textarea>
+
+                       
+                        <!-- <input type="text" class="form-control" name="keterangan"> -->
+                    </div>
+                    <!-- Ad d more fields as needed -->
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                <button type="submit" class="btn btn-primary">Simpan</button>
+            </div>
+                </form>
+        </div>
+    </div>
+</div>

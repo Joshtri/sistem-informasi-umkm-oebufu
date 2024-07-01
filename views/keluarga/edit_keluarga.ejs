@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%-include('partials/head');%>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<body>
+    <%-include('partials/header');%>
+
+    <div class="container mt-4">
+        <nav aria-label="breadcrumb" class="small">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/main/dashboard"><i class="fa-solid fa-house me-1"></i>Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="/adm/data/kbli">Data Keluarga</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><%= title %></li>
+            </ol>
+        </nav>
+        <hr>
+        
+        <div class="d-flex justify-content-between">
+            <div>
+                <a class="btn btn-sm btn-warning" href="/adm/data/keluarga">Kembali</a>
+            </div>
+        </div>
+    
+        <div class="card border border-0 shadow-sm mt-4">
+            <div class="card-body">
+                <form action="/adm/data/keluarga/<%= keluargaEdit._id %>?_method=PUT" method="POST">                
+                    <div class="row justify-content-center">
+                        <!-- Tambahkan method spoofing untuk PUT -->
+                        <input type="hidden" name="_method" value="PUT">
+                        
+                        <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                            <label for="nama_kepala_keluarga" class="form-label">Nama Kepala Keluarga</label>
+                            <input type="text" class="form-control" name="nama_kepala_keluarga" value="<%= keluargaEdit.nama_kepala_keluarga %>" required>           
+                        </div>
+                        
+                        <div class="col-lg-7 col-md-6 col-sm-12 mb-3">
+                            <label for="alamat_kepala_keluarga" class="form-label">Alamat Kepala Keluarga</label>
+                            <input type="text" class="form-control" name="alamat_kepala_keluarga" value="<%= keluargaEdit.alamat_kepala_keluarga %>" required>  
+                        </div>
+                    </div>
+
+                    <div class="mt-3 text-center">
+                        <button type="submit" class="btn btn-sm btn-primary">Update Data</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    
+
+
+
+    <script src="/js/tooltip.js"></script>
+</body>
+</html> 

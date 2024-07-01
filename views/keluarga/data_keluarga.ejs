@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%-include('partials/head');%>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<body>
+    <%-include('partials/header');%>
+      <style>
+        .custom-table td,
+        .custom-table th {
+            font-size: 14px; /* Adjust the font size as needed */
+        }
+
+        #current-time {
+          font-size: 0.875rem; /* Sesuaikan ukuran font sesuai kebutuhan */
+          color: #000; /* Sesuaikan warna teks sesuai kebutuhan */
+        }
+      </style>
+
+    <div class="container mt-4">
+        <nav aria-label="breadcrumb" class="small d-flex justify-content-between">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/main/dashboard"><i class="fa-solid fa-house me-1"></i>Dashboard</a></li>
+                <!-- <li class="breadcrumb-item"><a href="#">Data</a></li> -->
+                <li class="breadcrumb-item active" aria-current="page"><%= title %></li>
+            </ol>
+            <div id="current-time" class="align-self-center"></div>
+        </nav>
+        <hr>
+
+        <% messageDeleteError.forEach(element => { %>
+          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <%= element %>
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        <% }) %>
+
+                        <!-- toast tambah data berhasil. -->
+        <% messageCreateSuccess.forEach(element => { %>
+        <div class="toast-container top-0 end-0 p-3">
+          <!-- Then put toasts within -->
+          <div class="toast show fade" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+              <div class="custom-avatar rounded me-2"></div>
+              <strong class="me-auto">Notifikasi</strong>
+              <small class="text-body-secondary">just now</small>
+              <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+              <%= element %>
+            </div>
+          </div>
+        </div>
+        <% }) %>
+
+        <% messageDeleteSuccess.forEach(element => { %>
+        <!-- toast edit data berhasil. -->
+        <div class="toast-container top-0 end-0 p-3">
+          <!-- Then put toasts within -->
+          <div class="toast show fade" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+              <div class="custom-avatar rounded me-2"></div>
+              <strong class="me-auto">Notifikasi</strong>
+              <small class="text-body-secondary">just now</small>
+              <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+              <%= element %>
+            </div>
+          </div>
+        </div>
+        <% }) %>
+
+        <% messageUpdateSuccess.forEach(element => { %>
+        <!-- toast edit data berhasil. -->
+        <div class="toast-container top-0 end-0 p-3">
+          <!-- Then put toasts within -->
+          <div class="toast show fade" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+              <div class="custom-avatar rounded me-2"></div>
+              <strong class="me-auto">Notifikasi</strong>
+              <small class="text-body-secondary">just now</small>
+              <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+              <%= element %>
+            </div>
+          </div>
+        </div>
+        <% }) %>
+
+        <div class="d-flex justify-content-between">
+            <div>
+                <a class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#addKeluargaModal">Tambah Data</a>
+            </div>
+            <input class="form-control w-25" type="text" id="search-bar" placeholder="Cari...">
+        </div>
+
+        <%-include('keluarga/add_keluarga');%>
+    </div>
+
+
+    <div class="container mt-5">
+        <table class="table custom-table" id="data-table-view">
+            <thead>
+              <tr>
+                <th scope="col">No</th>
+                <th scope="col">Nama Kepala Keluarga</th>
+                <th scope="col">Alamat Kepala Keluarga</th>
+                <th scope="col" class="text-center">Aksi</th>
+              </tr>
+            </thead>
+            <tbody>
+
+            <% for(let i=0; i < keluargaData.length;i++) { %>
+              <tr>
+                <th scope="row"><%= i + 1%></th>
+                <td><%= keluargaData[i].nama_kepala_keluarga %></td>
+                <td><%= keluargaData[i].alamat_kepala_keluarga %></td>
+                <td class="text-center">
+                    <a href="/adm/data/keluarga/<%= keluargaData[i]._id %>" class="btn btn-light btn-sm"><i class="fa-regular fa-eye"></i></a>
+
+                    <a class="btn btn-light btn-sm" href="/adm/data/keluarga_edit/<%= keluargaData[i]._id %>"><i class="fa-regular fa-pen-to-square"></i></a>
+
+
+                    <a class="btn btn-light btn-sm delete-btn" data-bs-toggle="tooltip" data-bs-title="Delete this data" data-id="<%= keluargaData[i]._id %>">
+                        <i class="fa-solid fa-trash-can"></i>
+                    </a>
+                </td>
+              </tr>
+
+              <% } %>
+
+            </tbody>
+        </table>
+        <div id="no-data-message" class="alert alert-danger rounded mt-3 text-center" style="display: none;">
+          Data tidak ditemukan<i class="mx-1 fs-5 fa-brands fa-searchengin fa-bounce"></i>
+        </div>
+
+
+        <%-include('keluarga/delete_keluarga'); %>
+<!-- Pagination halaman data keluarga -->
+<% if (keluargaData.length > 0) { %>
+  <nav aria-label="Keluarga Pagination">
+      <ul class="pagination justify-content-center mt-5">
+  
+          <% if (currentPage == 1) { %>
+              <li class="page-item disabled"><a href="#" class="page-link">First</a></li>
+          <% } else { %>
+              <li class="page-item"><a href="/adm/data/keluarga?page=1&limit=<%= limit %>" class="page-link">First</a></li>
+          <% } %>
+  
+          <% var i = (Number(currentPage) > 5 ? Number(currentPage) - 4 : 1) %>
+          <% if(i !== 1) { %>
+              <li class="page-item disabled"><a href="#" class="page-link">...</a></li>
+          <% } %>
+  
+          <% for(; i <= (Number(currentPage) + 4) && i <= totalPages; i++ ) { %>
+              <% if (i == currentPage) { %>
+                  <li class="page-item disabled"><a href="#" class="page-link"><%= i %></a></li>
+              <% } else { %>
+                  <li class="page-item"><a href="/adm/data/keluarga?page=<%= i %>&limit=<%= limit %>" class="page-link"><%= i %></a></li>
+              <% } %>
+              <% if (i == Number(currentPage) + 4 && i < totalPages) { %>
+                  <li class="page-item disabled"><a href="#" class="page-link">...</a></li>
+              <% } %>
+          <% } %>
+  
+          <% if (currentPage == totalPages) { %>
+              <li class="page-item disabled"><a href="#" class="page-link">Last</a></li>
+          <% } else { %>
+              <li class="page-item"><a href="/adm/data/keluarga?page=<%= totalPages %>&limit=<%= limit %>" class="page-link">Last</a></li>
+          <% } %>
+
+          <!-- Add Show All option -->
+          <li class="page-item">
+              <a href="/adm/data/keluarga?showAll=true" class="page-link">Show All</a>
+          </li>
+  
+      </ul>
+  </nav>
+<% } %>
+    </div>
+
+
+        <!-- srcipt untuk delete data kbli -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+          var deleteButtons = document.querySelectorAll('.delete-btn');
+          var deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+          var deleteForm = document.getElementById('deleteForm');
+          var deleteIdInput = document.getElementById('deleteId');
+
+          deleteButtons.forEach(function(button) {
+              button.addEventListener('click', function() {
+                  var id = this.getAttribute('data-id');
+                  deleteForm.setAttribute('action', '/adm/data/keluarga/' + id + '?_method=DELETE');
+                  deleteIdInput.value = id;
+                  deleteModal.show();
+              });
+          });
+
+          
+      });
+    </script>
+    <script src="/js/tooltip.js"></script>
+    <script src="/js/features.js"></script>
+</body>
+</html> 

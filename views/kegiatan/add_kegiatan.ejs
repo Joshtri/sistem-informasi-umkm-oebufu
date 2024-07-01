@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%-include('partials/head');%>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <%-include('partials/header');%>
+    <div class="container mt-5">
+        <nav aria-label="breadcrumb" class="small">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/main/dashboard"><i class="fa-solid fa-house me-1"></i>Dashboard</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><%= title %></li>
+            </ol>
+        </nav>
+        <hr>
+        <a href="/adm/data/kegiatan" class="btn btn-secondary btn-sm">Kembali</a>
+
+        <h2 class="mb-4">Input Kegiatan</h2>
+        <form id="kegiatanForm" class="row g-3">
+            <div class="col-md-6">
+                <label for="nama_kegiatan" class="form-label">Nama Kegiatan</label>
+                <input type="text" class="form-control" id="nama_kegiatan" name="nama_kegiatan" required>
+            </div>
+            <div class="col-md-6">
+                <label for="tanggal_kegiatan" class="form-label">Tanggal Kegiatan</label>
+                <input type="date" class="form-control" id="tanggal_kegiatan" name="tanggal_kegiatan" required>
+            </div>
+            <div class="col-12">
+                <label for="deskripsi_kegiatan" class="form-label">Deskripsi Kegiatan</label>
+                <textarea class="form-control" id="deskripsi_kegiatan" name="deskripsi_kegiatan" rows="3" required></textarea>
+            </div>
+            <div class="col-12">
+                <label for="foto_kegiatan" class="form-label">Foto Kegiatan</label>
+                <input class="form-control" type="file" id="foto_kegiatan" name="foto_kegiatan" accept="*" required>
+
+            </div>
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="successModalLabel">Notifikasi</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Kegiatan berhasil ditambahkan!
+                </div>
+                <div class="modal-footer">
+                    <a href="/adm/data/kegiatan" class="btn btn-secondary">Close</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        document.getElementById('kegiatanForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const nama_kegiatan = document.getElementById('nama_kegiatan').value;
+            const tanggal_kegiatan = document.getElementById('tanggal_kegiatan').value;
+            const deskripsi_kegiatan = document.getElementById('deskripsi_kegiatan').value;
+            const foto_kegiatan = document.getElementById('foto_kegiatan').files[0];
+
+            if (!foto_kegiatan) {
+                alert('Mohon unggah file.');
+                return;
+            }
+
+            if (foto_kegiatan.size > 5 * 1024 * 1024) { // Ukuran maksimal 5MB
+                alert('Ukuran file terlalu besar. Maksimal 5MB.');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onloadend = async () => {
+                const base64String = reader.result.replace('data:', '').replace(/^.+,/, '');
+
+                const kegiatan = {
+                    nama_kegiatan,
+                    tanggal_kegiatan,
+                    deskripsi_kegiatan,
+                    foto_kegiatan: base64String
+                };
+
+                const response = await fetch('/adm/data/kegiatan', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(kegiatan)
+                });
+
+                if (response.ok) {
+                    document.getElementById('kegiatanForm').reset();
+                    const successModal = new bootstrap.Modal(document.getElementById('successModal'));
+                    successModal.show();
+                } else {
+                    alert('Terjadi kesalahan, coba lagi.');
+                }
+            };
+
+            reader.readAsDataURL(foto_kegiatan);
+        });
+    </script>
+</body>
+</html>

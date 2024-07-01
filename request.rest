@@ -1,0 +1,12 @@
+GET http://localhost:3001/adm/data/kbli_test
+
+
+###
+# Create KBLI Data
+POST http://localhost:3001/adm/data/kbli
+Content-Type: application/json
+
+{
+    "nomor_kbli": 12,
+    "keterangan": "Sample KBLI Description"
+}

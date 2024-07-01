@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('partials/head'); %>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<body>
+    <%- include('partials/header'); %>
+    <div class="container mt-4">
+        <nav aria-label="breadcrumb" class="small">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/main/dashboard"><i class="fa-solid fa-house me-1"></i>Dashboard</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><%= title %></li>
+            </ol>
+        </nav>
+        <hr>
+        <div class="d-flex justify-content-between">
+            <div>
+                <a class="btn btn-sm btn-warning" href="/adm/data/umkm">Kembali</a>
+            </div>
+        </div>
+        <h3 class="fw-title text-center">Tambah Data UMKM</h3>
+        <div class="card border border-0 shadow-sm mt-4">
+            <div class="card-body">
+                <form action="/adm/data/umkm" method="POST">
+                    <div class="row">
+                        <h4>Data diri pengusaha</h4>
+                        <div class="mb-3 col-lg-4">
+                            <label for="nama_pemilik" class="form-label">Nama Pemilik</label>
+                            <select class="form-select" id="nama_pemilik" name="nama_pemilik" required>
+                                <option value="">-</option>
+                                <% for(let i = 0; i < pendudukData.length; i++) { %>
+                                    <option value="<%= pendudukData[i]._id %>"><%= pendudukData[i].nama_penduduk %></option>
+                                <% } %>
+                            </select>
+                        </div>
+                        <div class="mb-3 col-lg-4">
+                            <label for="keluarga_Id" class="form-label">Keluarga Dari</label>
+                            <select class="form-select" id="keluarga_Id" name="keluarga_Id" required>
+                                <option value="">-</option>
+                                <% for(let i = 0; i < keluargaData.length; i++) { %>
+                                    <option value="<%= keluargaData[i]._id %>"><%= keluargaData[i].nama_kepala_keluarga %></option>
+                                <% } %>
+                            </select>
+                        </div>
+                        <div class="mb-3 col-lg-4">
+                            <label for="alamat_tempat_tinggal" class="form-label">Alamat Tempat Tinggal</label>
+                            <input type="text" class="form-control" id="alamat_tempat_tinggal" name="alamat_tempat_tinggal" required>
+                        </div>
+                        <div class="mb-3 col-lg-4">
+                            <label for="pendidikan_pemilik" class="form-label">Pendidikan Pemilik</label>
+                            <input type="text" class="form-control" id="pendidikan_pemilik" name="pendidikan_pemilik" readonly>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <h4>Data usaha</h4>
+                        <div class="mb-3 col-lg-4">
+                            <label for="nama_usaha" class="form-label">Nama Usaha</label>
+                            <input type="text" class="form-control" id="nama_usaha" name="nama_usaha" required>
+                        </div>
+
+                        <div class="mb-3 col-lg-4">
+                            <label for="kbli_Id" class="form-label">KBLI <span style="font-size: small;">(Klasifikasi Baku Lapangan Usaha Indonesia)</span></label>
+                            <select class="form-select" id="kbli_Id" name="kbli_Id" required>
+                                <option value="">-</option>
+                                <% for(let i=0; i < kbliData.length; i++) { %>
+                                <option value="<%= kbliData[i]._id %>"><%= kbliData[i].nomor_kbli %> - <%= kbliData[i].keterangan %></option>
+
+                                <% } %>
+                            </select>
+                        </div>
+
+                        <div class="mb-3 col-lg-4">
+                            <label for="alamat_tempat_usaha" class="form-label">Alamat Tempat Usaha</label>
+                            <input type="text" class="form-control" id="alamat_tempat_usaha" name="alamat_tempat_usaha">
+                        </div>
+
+                        <div class="mb-3 col-lg-4">
+                            <label for="jenis_lokasi_usaha" class="form-label">Jenis Lokasi Usaha</label>
+                            <select class="form-select" id="jenis_lokasi_usaha" name="jenis_lokasi_usaha" required>
+                                <option value="">-</option>
+                                <option value="menetap">menetap</option>
+                                <option value="keliling">keliling</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3 col-lg-4">
+                            <label for="pembinaan_usaha" class="form-label">Pembinaan Usaha</label>
+                            <select class="form-select" id="pembinaan_usaha" name="pembinaan_usaha" required>
+                                <option value="">-</option>
+                                <option value="ya">ya</option>
+                                <option value="tidak">tidak</option>
+                            </select>
+                        </div>
+                        <div class="mb-3 col-lg-4">
+                            <label for="jenis_pengelolaan_usaha" class="form-label">Jenis Pengelolaan Usaha</label>
+                            <select class="form-select" id="jenis_pengelolaan_usaha" name="jenis_pengelolaan_usaha" required>
+                                <option value="">-</option>
+                                <option value="perorangan">perorangan</option>
+                                <option value="badan usaha">badan usaha</option>
+                            </select>
+                        </div>
+                        <div class="mb-3 col-lg-4">
+                            <label for="jumlah_tenaga_kerja" class="form-label">Jumlah Tenaga Kerja</label>
+                            <select class="form-select" id="jumlah_tenaga_kerja" name="jumlah_tenaga_kerja" required>
+                                <option value="">-</option>
+                                <option value="1-5 tenaga kerja">1-5 tenaga kerja</option>
+                                <option value="6-19 tenaga kerja">6-19 tenaga kerja</option>
+                                <option value="≥ 20 tenaga kerja">≥ 20 tenaga kerja</option>
+                            </select>
+                        </div>
+                        <div class="mb-3 col-lg-4">
+                            <label for="sumber_modal_usaha" class="form-label">Sumber Modal </label>
+                            <select class="form-select" id="sumber_modal_usaha" name="sumber_modal_usaha" required>
+                                <option value="">-</option>
+                                <option value="modal sendiri">modal sendiri</option>
+                                <option value="bantuan pemerintah">bantuan pemerintah</option>
+                                <option value="modal sendiri & bantuan pemerintah">modal sendiri & bantuan pemerintah</option>
+                            </select>
+                        </div>
+                        <div class="mb-3 col-lg-4">
+                            <label for="omset_tahunan_usaha" class="form-label">Omset Tahunan Usaha </label>
+                            <select class="form-select" id="omset_tahunan_usaha" name="omset_tahunan_usaha" required>
+                                <option value="">-</option>
+                                <option value="Omset <= Rp.300 Juta">Omset <= Rp.300 Juta</option>
+                                <option value="Rp.300 Juta < Omset <= Rp.2,5 Milliar">Rp.300 Juta < Omset <= Rp.2,5 Milliar</option>
+                                <option value="Rp.2,5 Milliar < Omset <= Rp.50 Milliar">Rp.2,5 Milliar < Omset <= Rp.50 Milliar</option>
+                            </select>
+                        </div>
+                        <div class="mb-3 col-lg-4">
+                            <label for="kekayaan_bersih_usaha" class="form-label">Kekayaan Bersih Usaha </label>
+                            <select class="form-select" id="kekayaan_bersih_usaha" name="kekayaan_bersih_usaha" required>
+                                <option value="">-</option>
+                                <option value="KBU <= Rp.50 Juta">KBU <= Rp.50 Juta</option>
+                                <option value="Rp.50 Juta < KBU <= Rp.500 Juta">Rp.50 Juta < KBU <= Rp.500 Juta</option>
+                                <option value="Rp.500 Juta < KBU <= Rp.10 Milliar">Rp.500 Juta < KBU <= Rp.10 Milliar</option>
+                            </select>
+                        </div>
+                    </div>  
+                    <div class="row">
+                        <div class="mb-3 col-lg-4">
+                            <div class="form-floating">
+                                <textarea class="form-control" placeholder="Leave a comment here" id="rincian_kegiatan_usaha" name="rincian_kegiatan_usaha"></textarea>
+                                <label for="floatingTextarea">Rincian Kegiatan Usaha</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-sm btn-primary">Upload Data</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container mt-5"></div>
+    <script>
+        $(document).ready(function() {
+            const pendudukData = <%- JSON.stringify(pendudukData) %>;
+            const keluargaData = <%- JSON.stringify(keluargaData) %>;
+    
+            $('#nama_pemilik').change(function() {
+                const selectedId = $(this).val();
+                if (selectedId) {
+                    const selectedPenduduk = pendudukData.find(penduduk => penduduk._id === selectedId);
+                    const selectedKeluarga = keluargaData.find(keluarga => keluarga._id === selectedPenduduk.keluargaId);
+    
+                    $('#pendidikan_pemilik').val(selectedPenduduk.pendidikan_penduduk);
+                    $('#keluarga_Id').val(selectedKeluarga ? selectedKeluarga._id : '');
+                    $('#alamat_tempat_tinggal').val(selectedKeluarga ? selectedKeluarga.alamat_keluarga : '');
+                } else {
+                    $('#pendidikan_pemilik').val('');
+                    $('#keluarga_Id').val('');
+                    $('#alamat_tempat_tinggal').val('');
+                }
+            });
+        });
+    </script>
+    <script src="/js/tooltip.js"></script>
+</body>
+</html>

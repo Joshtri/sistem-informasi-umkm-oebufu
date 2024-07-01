@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%-include('partials/head');%>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<body>
+    <%-include('partials/header');%>
+      <style>
+        .custom-table td,
+        .custom-table th {
+            font-size: 14px; /* Adjust the font size as needed */
+        }
+
+        #current-time {
+          font-size: 0.875rem; /* Sesuaikan ukuran font sesuai kebutuhan */
+          color: #000; /* Sesuaikan warna teks sesuai kebutuhan */
+        }
+      </style>
+
+    <div class="container mt-4">
+        <nav aria-label="breadcrumb" class="small d-flex justify-content-between">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/main/dashboard"><i class="fa-solid fa-house me-1"></i>Dashboard</a></li>
+                <!-- <li class="breadcrumb-item"><a href="#">Data</a></li> -->
+                <li class="breadcrumb-item active" aria-current="page"><%= title %></li>
+            </ol>
+            <div id="current-time" class="align-self-center"></div>
+        </nav>
+        <hr>
+
+                        <!-- toast tambah data berhasil. -->
+        <% messageCreateSuccess.forEach(element => { %>
+        <div class="toast-container top-0 end-0 p-3">
+          <!-- Then put toasts within -->
+          <div class="toast show fade" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+              <div class="custom-avatar rounded me-2"></div>
+              <strong class="me-auto">Notifikasi</strong>
+              <small class="text-body-secondary">just now</small>
+              <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+              <%= element %>
+            </div>
+          </div>
+        </div>
+        <% }) %>
+
+        <% messageDeleteSuccess.forEach(element => { %>
+        <!-- toast edit data berhasil. -->
+        <div class="toast-container top-0 end-0 p-3">
+          <!-- Then put toasts within -->
+          <div class="toast show fade" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+              <div class="custom-avatar rounded me-2"></div>
+              <strong class="me-auto">Notifikasi</strong>
+              <small class="text-body-secondary">just now</small>
+              <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+              <%= element %>
+            </div>
+          </div>
+        </div>
+        <% }) %>
+
+        <% messageUpdateSuccess.forEach(element => { %>
+        <!-- toast edit data berhasil. -->
+        <div class="toast-container top-0 end-0 p-3">
+          <!-- Then put toasts within -->
+          <div class="toast show fade" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+              <div class="custom-avatar rounded me-2"></div>
+              <strong class="me-auto">Notifikasi</strong>
+              <small class="text-body-secondary">just now</small>
+              <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+              <%= element %>
+            </div>
+          </div>
+        </div>
+        <% }) %>
+
+
+
+        <div class="d-flex justify-content-between">
+            <div>
+                <a class="btn btn-sm btn-warning" href="/adm/data/add_kegiatan">Tambah Data</a>
+            </div>
+        </div>
+
+
+
+    </div>
+
+
+    <div class="container mt-5">
+        <table class="table custom-table" id="data-table-view">
+            <thead>
+              <tr>
+                <th scope="col">No</th>
+                <th scope="col">Nama Kegiatan</th>
+                <th scope="col">Tanggal Kegiatan</th>
+                <th scope="col">Deskripsi Kegiatan</th>
+                <th scope="col">Foto Kegiatan</th>
+                <th scope="col">Aksi</th>
+
+              </tr>
+            </thead>
+            <tbody>
+
+            <% for(let i=0; i < kegiatanData.length;i++) { %>
+              <tr>
+                <th scope="row"><%= i + 1%></th>
+                <td><%= kegiatanData[i].nama_kegiatan %></td>
+                <td><%= new Date(kegiatanData[i].tanggal_kegiatan).toLocaleString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }) %></td>
+                <td><%= kegiatanData[i].deskripsi_kegiatan %></td>
+                <td><img src="data:image/png;base64,<%= kegiatanData[i].foto_kegiatan %>" alt="Foto Kegiatan" style="max-width: 100px;"></td>
+                <td>
+                  <a class="btn btn-light btn-sm" href="/adm/data/edit_kegiatan/<%= kegiatanData[i]._id %>"><i class="fa-regular fa-pen-to-square"></i></a>
+
+                    <a class="btn btn-light btn-sm delete-btn" data-bs-toggle="tooltip" data-bs-title="Delete this data" data-id="<%= kegiatanData[i]._id %>">
+                        <i class="fa-solid fa-trash-can"></i>
+                    </a>
+                </td>
+              </tr>
+              <% } %>
+
+            </tbody>
+        </table>
+    </div>
+
+    <%-include('kegiatan/delete_kegiatan'); %>
+        <!-- srcipt untuk delete data kbli -->
+
+    <!-- Script JavaScript untuk handle file select dan submit form -->
+    <script>
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                // Kita tidak perlu menyetel input hidden untuk file base64
+            };
+            reader.readAsDataURL(file);
+        }
+
+        async function handleSubmit(event) {
+            event.preventDefault();
+            
+            // Dapatkan elemen form dengan id kegiatanForm
+            const form = document.getElementById('kegiatanForm');
+            const formData = new FormData(form);
+
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    alert(result.message || 'Kegiatan created successfully!');
+                    window.location.href = '/adm/data/kegiatan';
+                } else {
+                    alert(result.message || 'Terjadi kesalahan. Coba lagi.');
+                }
+            } catch (error) {
+                alert('Terjadi kesalahan. Coba lagi.');
+            }
+        }
+
+        // Tambahkan event listener pada form submit
+        document.getElementById('kegiatanForm').addEventListener('submit', handleSubmit);
+    </script>
+            <!-- srcipt untuk delete data kbli -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+          var deleteButtons = document.querySelectorAll('.delete-btn');
+          var deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+          var deleteForm = document.getElementById('deleteForm');
+          var deleteIdInput = document.getElementById('deleteId');
+
+          deleteButtons.forEach(function(button) {
+              button.addEventListener('click', function() {
+                  var id = this.getAttribute('data-id');
+                  deleteForm.setAttribute('action', '/adm/data/kegiatan/' + id + '?_method=DELETE');
+                  deleteIdInput.value = id;
+                  deleteModal.show();
+              });
+          });
+
+          
+      });
+    </script>
+
+    
+
+    <script src="/js/tooltip.js"></script>
+    <!-- <script src="/js/features.js"></script> -->
+</body>
+</html> 

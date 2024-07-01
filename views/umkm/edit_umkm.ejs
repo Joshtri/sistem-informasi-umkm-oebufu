@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%-include('partials/head');%>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<body>
+    <%-include('partials/header');%>
+
+    <div class="container mt-4">
+        <nav aria-label="breadcrumb" class="small">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/main/dashboard"><i class="fa-solid fa-house me-1"></i>Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="/adm/data/umkm">Data UMKM</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><%= title %></li>
+            </ol>
+        </nav>
+        <hr>
+        
+        <div class="d-flex justify-content-between">
+            <div>
+                <a class="btn btn-sm btn-warning" href="/adm/data/umkm">Kembali</a>
+            </div>
+        </div>
+
+        <h3 class="fw-title text-center">Edit Data UMKM</h3>
+        <div class="card border border-0 shadow-sm mt-4">
+            <div class="card-body">
+                <form  action="/adm/data/umkm/<%= umkmEdit._id %>?_method=PUT" method="POST">
+                    <div class="row">
+                        <h4>Data diri pengusaha</h4>
+                        <div class="mb-3 col-lg-4">
+                            <label for="nama_pemilik" class="form-label">Nama Pemilik</label>
+                            <select class="form-select" id="nama_pemilik" name="nama_pemilik" required>
+                                <option value="">-</option>
+                                <% pendudukData.forEach(function(penduduk) { %>
+                                    <option value="<%= penduduk._id %>" <%= umkmEdit.nama_pemilik.id == penduduk._id ? 'selected' : '' %>>
+                                        <%= penduduk.nama_penduduk %>
+                                    </option>
+                                <% }); %>
+                            </select>
+                        </div>
+                        <div class="mb-3 col-lg-4">
+                            <label for="keluarga_Id" class="form-label">Keluarga Dari</label>
+                            <select class="form-select" id="keluarga_Id" name="keluarga_Id" required>
+                                <option value="">-</option>
+                                <% keluargaData.forEach(function(keluarga) { %>
+                                    <option value="<%= keluarga._id %>" <%= umkmEdit.keluarga_Id.id == keluarga._id ? 'selected' : '' %>>
+                                        <%= keluarga.nama_kepala_keluarga %>
+                                    </option>
+                                <% }); %>
+        
+                            </select>
+                        </div>
+                        <div class="mb-3 col-lg-4">
+                            <label for="alamat_tempat_tinggal" class="form-label">Alamat Tempat Tinggal</label>
+                            <input type="text" class="form-control" id="alamat_tempat_tinggal" value="<%= umkmEdit.alamat_tempat_tinggal %>" name="alamat_tempat_tinggal">
+                        </div>
+                        <div class="mb-3 col-lg-4">
+                            <label for="pendidikan_pemilik" class="form-label">Pendidikan Pemilik</label>
+                            <input type="text" class="form-control" id="pendidikan_pemilik" name="pendidikan_pemilik" value="<%= umkmEdit.pendidikan_pemilik %>">
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <h4>Data usaha</h4>
+                        <div class="mb-3 col-lg-4">
+                            <label for="nama_usaha" class="form-label">Nama Usaha</label>
+                            <input type="text" class="form-control" id="nama_usaha" name="nama_usaha" value="<%= umkmEdit.nama_usaha %>">
+                        </div>
+
+                        <div class="mb-3 col-lg-4">
+                            <label for="kbli_Id" class="form-label">KBLI <span style="font-size: small;">(Klasifikasi Baku Lapangan Usaha Indonesia)</span></label>
+                            <select class="form-select" id="kbli_Id" name="kbli_Id" required>
+                                <option value="">-</option>
+                                <% kbliData.forEach(function(kbli) { %>
+                                    <option value="<%= kbli._id %>" <%= umkmEdit.kbli_Id.id == kbli._id ? 'selected' : '' %>>
+                                        <%= kbli.keterangan %>
+                                    </option>
+                                <% }); %>
+                            </select>
+                        </div>
+
+                        <div class="mb-3 col-lg-4">
+                            <label for="alamat_tempat_usaha" class="form-label">Alamat Tempat Usaha</label>
+                            <input type="text" class="form-control" id="alamat_tempat_usaha" name="alamat_tempat_usaha" value="<%= umkmEdit.alamat_tempat_usaha %>">
+                        </div>
+
+                        <div class="mb-3 col-lg-4">
+                            <label for="jenis_lokasi_usaha" class="form-label">Jenis Lokasi Usaha</label>
+                            <select class="form-select" id="jenis_lokasi_usaha" name="jenis_lokasi_usaha" required>
+                                <option value="">-</option>
+                                <option value="menetap" <%= umkmEdit.jenis_lokasi_usaha == "menetap" ? 'selected' : '' %>>menetap</option>
+                                <option value="keliling" <%= umkmEdit.jenis_lokasi_usaha == "keliling" ? 'selected' : '' %>>keliling</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3 col-lg-4">
+                            <label for="pembinaan_usaha" class="form-label">Pembinaan Usaha</label>
+                            <select class="form-select" id="pembinaan_usaha" name="pembinaan_usaha" required>
+                                <option value="">-</option>
+                                <option value="ya" <%= umkmEdit.pembinaan_usaha == "ya" ? 'selected' : '' %>>ya</option>
+                                <option value="tidak" <%= umkmEdit.pembinaan_usaha == "tidak" ? 'selected' : '' %>>tidak</option>
+                            </select>
+                        </div>
+                        <div class="mb-3 col-lg-4">
+                            <label for="jenis_pengelolaan_usaha" class="form-label">Jenis Pengelolaan Usaha</label>
+                            <select class="form-select" id="jenis_pengelolaan_usaha" name="jenis_pengelolaan_usaha" required>
+                                <option value="">-</option>
+                                <option value="perorangan" <%= umkmEdit.jenis_pengelolaan_usaha == "perorangan" ? 'selected' : '' %>>perorangan</option>
+                                <option value="badan usaha" <%= umkmEdit.jenis_pengelolaan_usaha == "badan usaha" ? 'selected' : '' %>>badan usaha</option>
+                            </select>
+                        </div>
+                        <div class="mb-3 col-lg-4">
+                            <label for="jumlah_tenaga_kerja" class="form-label">Jumlah Tenaga Kerja</label>
+                            <select class="form-select" id="jumlah_tenaga_kerja" name="jumlah_tenaga_kerja" required>
+                                <option value="">-</option>
+                                <option value="1-5 tenaga kerja" <%= umkmEdit.jumlah_tenaga_kerja == "1-5 tenaga kerja" ? 'selected' : '' %>>1-5 tenaga kerja</option>
+                                <option value="6-19 tenaga kerja" <%= umkmEdit.jumlah_tenaga_kerja == "6-19 tenaga kerja" ? 'selected' : '' %>>6-19 tenaga kerja</option>
+                                <option value="≥ 20 tenaga kerja" <%= umkmEdit.jumlah_tenaga_kerja == "≥ 20 tenaga kerja" ? 'selected' : '' %>>≥ 20 tenaga kerja</option>
+                            </select>
+                        </div>
+                        <div class="mb-3 col-lg-4">
+                            <label for="sumber_modal_usaha" class="form-label">Sumber Modal </label>
+                            <select class="form-select" id="sumber_modal_usaha" name="sumber_modal_usaha" required>
+                                <option value="">-</option>
+                                <option value="modal sendiri" <%= umkmEdit.sumber_modal_usaha == "modal sendiri" ? 'selected' : '' %>>modal sendiri</option>
+                                <option value="bantuan pemerintah" <%= umkmEdit.sumber_modal_usaha == "bantuan pemerintah" ? 'selected' : '' %>>bantuan pemerintah</option>
+                                <option value="modal sendiri & bantuan pemerintah" <%= umkmEdit.sumber_modal_usaha == "modal sendiri & bantuan pemerintah" ? 'selected' : '' %>>modal sendiri & bantuan pemerintah</option>
+                            </select>
+                        </div>
+                        <div class="mb-3 col-lg-4">
+                            <label for="omset_tahunan_usaha" class="form-label">Omset Tahunan Usaha </label>
+                            <select class="form-select" id="omset_tahunan_usaha" name="omset_tahunan_usaha" required>
+                                <option value="">-</option>
+                                <option value="Omset <= Rp.300 Juta" <%= umkmEdit.omset_tahunan_usaha == "Omset <= Rp.300 Juta" ? 'selected' : '' %>>Omset <= Rp.300 Juta</option>
+                                <option value="Rp.300 Juta < Omset <= Rp.2,5 Milliar" <%= umkmEdit.omset_tahunan_usaha == "Rp.300 Juta < Omset <= Rp.2,5 Milliar" ? 'selected' : '' %>>Rp.300 Juta < Omset <= Rp.2,5 Milliar</option>
+                                <option value="Rp.2,5 Milliar < Omset <= Rp.50 Milliar" <%= umkmEdit.omset_tahunan_usaha == "Rp.2,5 Milliar < Omset <= Rp.50 Milliar" ? 'selected' : '' %>>Rp.2,5 Milliar < Omset <= Rp.50 Milliar</option>
+                            </select>
+                        </div>
+                        <div class="mb-3 col-lg-4">
+                            <label for="kekayaan_bersih_usaha" class="form-label">Kekayaan Bersih Usaha </label>
+                            <select class="form-select" id="kekayaan_bersih_usaha" name="kekayaan_bersih_usaha" required>
+                                <option value="">-</option>
+                                <option value="KBU <= Rp.50 Juta" <%= umkmEdit.kekayaan_bersih_usaha == "KBU <= Rp.50 Juta" ? 'selected' : '' %>>KBU <= Rp.50 Juta</option>
+                                <option value="Rp.50 Juta < KBU <= Rp.500 Juta" <%= umkmEdit.kekayaan_bersih_usaha == "Rp.50 Juta < KBU <= Rp.500 Juta" ? 'selected' : '' %>>Rp.50 Juta < KBU <= Rp.500 Juta</option>
+                                <option value="Rp.500 Juta < KBU <= Rp.10 Milliar" <%= umkmEdit.kekayaan_bersih_usaha == "Rp.500 Juta < KBU <= Rp.10 Milliar" ? 'selected' : '' %>>Rp.500 Juta < KBU <= Rp.10 Milliar</option>
+                            </select>
+                        </div>
+                    </div>  
+                    <div class="row">
+                        <div class="mb-3 col-lg-4">
+                            <div class="form-floating">
+                                <textarea class="form-control" placeholder="Leave a comment here" id="rincian_kegiatan_usaha" name="rincian_kegiatan_usaha"><%= umkmEdit.rincian_kegiatan_usaha %></textarea>
+                                <label for="floatingTextarea">Rincian Kegiatan Usaha</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-sm btn-primary">Update Data</button>
+                    </div>
+                </form>
+            </div>
+        </div>  
+    </div>
+
+    <script src="/js/tooltip.js"></script>
+</body>
+</html>

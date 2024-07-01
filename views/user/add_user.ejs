@@ -1,0 +1,39 @@
+<div class="modal fade" id="addKeluargaModal" tabindex="-1" aria-labelledby="addKeluargaModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addKeluargaModal">Tambah User - Admin</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="/adm/data/user" method="POST">
+                    
+                    <div class="mb-3">
+                        <label for="nama_lengkap" class="form-label">Nama Lengkap</label>
+                        <input type="text" class="form-control" name="nama_lengkap" required>                
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" class="form-control" name="username" required>     
+                       
+                        <!-- <input type="text" class="form-control" name="keterangan"> -->
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="text" class="form-control" name="password" required>     
+                       
+                        <!-- <input type="text" class="form-control" name="keterangan"> -->
+                    </div>
+                    <!-- Add more fields as needed -->
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                <button type="submit" class="btn btn-primary">Simpan</button>
+            </div>
+                </form>
+        </div>
+    </div>
+</div>

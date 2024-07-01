@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%-include('partials/head');%>
+    <link rel="stylesheet" href="/css/login.css">
+  </head>
+</head>
+<body>
+    <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .card {
+      border: none;
+      border-radius: 15px;
+      overflow: hidden;
+    }
+    .img-left {
+      background: url('/images/admin-vector.webp') center center/cover no-repeat;
+      width: 40%;
+    }
+    .title {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #333;
+    }
+    .card-body {
+      padding: 0rem;
+    }
+    .text-center img {
+      max-width: 100%;
+      height: auto;
+    }
+  </style>
+
+  <div class="container">
+    <% messageProtect.forEach(element => { %>
+      <div class="toast-container top-0 end-0 p-3">
+        <!-- Then put toasts within -->
+        <div class="toast show fade" role="alert" aria-live="assertive" aria-atomic="true">
+          <div class="toast-header bg-danger">
+            <div class="custom-avatar rounded me-2"></div>
+            <strong class="me-auto">Notifikasi</strong>
+            <small class="text-body-secondary">just now</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+          </div>
+          <div class="toast-body fw-bold text-dark">
+            <%= element %>
+          </div>
+        </div>
+      </div>
+    <% }) %>
+    
+    <div class="row justify-content-center">
+      <div class="col-lg-10 col-xl-9">
+        <div class="card flex-row mx-auto p-2">
+          <div class="img-left d-none me-2 d-md-block"></div>
+          <div class="card-body">
+            <div class="row text-center mt-2">
+              <div class="col text-end">
+                <a href="https://kupangkota.bps.go.id">
+                  <img src="/images/310px-Lambang_Badan_Pusat_Statistik_(BPS)_Indonesia.svg.webp" alt="BPS Logo" width="70" height="60">
+                </a>
+              </div>
+              <div class="col">
+                <a href="#">
+                  <img src="/images/489px-LOGO_KOTA_KUPANG (1 300x300).webp" alt="Kupang Logo" width="72" height="70">
+                </a>
+              </div>
+              <div class="col text-start">
+                <a href="https://undana.ac.id">
+                  <img src="/images/Logo_Undana (1).webp" alt="Undana Logo" width="70" height="70">
+                </a>
+              </div>
+            </div>
+            <h4 class="title text-center mt-4">
+              SISTEM INFORMASI UMKM <br> KELURAHAN OEBUFU
+            </h4>
+            <h6 class="text-center mt-5">
+              Masukkan akun anda
+            </h6>
+            <form method="post" action="/login">
+              <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" name="username" id="username" class="form-control" required>
+              </div>
+              <div class="mb-4">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" name="password" id="password" class="form-control" required>
+              </div>
+              <div class="d-grid gap-2 col-6 mx-auto mb-3">
+                <button type="submit" class="btn btn-primary btn-block text-uppercase">
+                  Log in
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/js/all.min.js" integrity="sha512-8pHNiqTlsrRjVD4A/3va++W1sMbUHwWxxRPWNyVlql3T+Hgfd81Qc6FC5WMXDC+tSauxxzp1tgiAvSKFu1qIlA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</body>
+</html>

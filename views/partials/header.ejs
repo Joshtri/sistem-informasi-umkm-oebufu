@@ -1,0 +1,55 @@
+
+
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #061952;">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">SI UMKM |<b> KELURAHAN OETETE</b></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+
+      <!-- FIX THIS NAV ITEM. -->
+
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+            <a class="nav-link active" aria-current="page" href="/main/dashboard">Beranda</a>
+            <a class="nav-link" href="/main_stats">Statistik</a>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Data
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="/adm/data/keluarga">Data Keluarga</a></li>
+                  <li><a class="dropdown-item" href="/adm/data/penduduk">Data Penduduk</a></li>
+                  <li><a class="dropdown-item" href="/adm/data/umkm">Data UMKM</a></li>
+                  <li><a class="dropdown-item" href="/adm/data/kbli">Data KBLI</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="/adm/data/user">Data User</a></li>
+                  <li><a class="dropdown-item" href="/adm/data/publikasi">Data Publikasi</a></li>
+                  <li><a class="dropdown-item" href="/adm/data/kegiatan">Kegiatan Kelurahan</a></li>
+                </ul>
+            </li>
+        </div>
+
+        <style>
+          .navbar-nav .nav-item .nav-link img {
+              border-radius: 50%; /* Membuat gambar menjadi bulat */
+              object-fit: cover; /* Mengatur gambar agar sesuai dengan area lingkaran */
+          }
+        </style>
+        <div class="navbar-nav ms-auto pe-5">
+          <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <img src="https://via.placeholder.com/50" alt="Profil Foto" class="rounded-circle me-2" width="30" height="30"> Profil Anda
+              </a>
+              <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="/main/informasi_akun">Informasi Akun</a></li>
+                  <li><a class="dropdown-item" href="/logout">Log Out</a></li>
+                  <li><hr class="dropdown-divider"></li>
+              </ul>
+          </li>
+      </div>
+    </div>
+  </div>
+</nav>
+  
