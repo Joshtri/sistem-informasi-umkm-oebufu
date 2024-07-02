@@ -1,4 +1,4 @@
-# Sistem Informasi UMKM Kelurahan Oebufu-v1.3
+# Sistem Informasi UMKM Kelurahan Oebufu
 **Akses Aplikasi**: Buka web browser dan akses [Sistem Informasi UMKM Kelurahan Oebufu](https://sistem-informasi-umkm-oebufu.vercel.app/).
 ## 📕Table of Contents
 
