@@ -1,4 +1,5 @@
-# Sistem Informasi UMKM Kelurahan Oetete-v1.3 
+# Sistem Informasi UMKM Kelurahan Oebufu-v1.3
+**Akses Aplikasi**: Buka web browser dan akses [Sistem Informasi UMKM Kelurahan Oebufu](https://sistem-informasi-umkm-oebufu.vercel.app/).
 ## 📕Table of Contents
 
 - [Introduction](#introduction)
@@ -13,7 +14,7 @@
 
 ## Introduction
 
-**Sistem Informasi UMKM Kelurahan Oetete-v1.3** adalah proyek berbasis Node.js yang memanfaatkan berbagai paket untuk pengembangan web, termasuk Express untuk penanganan sisi server, Mongoose untuk interaksi dengan MongoDB, dan Sequelize untuk interaksi dengan database SQL. Sistem ini bertujuan untuk membantu usaha mikro, kecil, dan menengah (UMKM) di Kelurahan Oetete dalam mengelola informasi dan operasi mereka secara efektif.
+**Sistem Informasi UMKM Kelurahan Oebufu-v1.3** adalah proyek berbasis Node.js yang memanfaatkan berbagai paket untuk pengembangan web, termasuk Express untuk penanganan sisi server, Mongoose untuk interaksi dengan MongoDB, dan Sequelize untuk interaksi dengan database SQL. Sistem ini bertujuan untuk membantu usaha mikro, kecil, dan menengah (UMKM) di Kelurahan Oebufu dalam mengelola informasi dan operasi mereka secara efektif.
 
 
 ## ⚙️  Built With
@@ -35,7 +36,7 @@ Pastikan Anda sudah menginstall software berikut:
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/yourusername/admin-fontein-v1.3.git
+   git clone https://github.com/Joshtri/sistem-informasi-umkm-oebufu
    cd admin-fontein-v1.3
    
 1. **Install Packages:**
@@ -79,4 +80,4 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 ## Contact:
 - 📧 E-Mail - stuffofyos1516@gmail.com
-- Project Link: https://github.com/Joshtri/fontein-si-umkm-1.3
+- Project Link: https://github.com/Joshtri/sistem-informasi-umkm-oebufu
